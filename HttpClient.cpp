@@ -4,6 +4,7 @@
 #include <netdb.h>      // Needed for the socket functions
 #include <unistd.h>
 #include "HttpClient.h"
+#include "URL.h"
 
 
 
@@ -17,14 +18,14 @@ std::string HttpClient::GetMessage() {
 
 std::string GetHostName(std::string url) {
 	//http://www.google.com
-	
+
 	int hasProtocol = url.find("http://");
-	
+
 	if(hasProtocol != std::string::npos) {
-		
+
 	}
-	
-	
+
+
 }
 
 int GetPort(std::string url) {
@@ -34,6 +35,17 @@ int GetPort(std::string url) {
 
 //This needs to be refactored to go away from command line style
 HttpResponse HttpClient::RunRequest(std::string url, std::string type) {
+
+	URL urlObject(url);
+	//URL urlObject("https://www.google.com:8080/dude");
+	//URL urlObject("https://www.google.com:8080");
+	//URL urlObject("https://www.google.com");
+
+	std::cout << urlObject.GetFullURL() << "\n";
+	std::cout << urlObject.GetProtocoll() << "\n";
+	std::cout << urlObject.GetHostName() << "\n";
+	std::cout << urlObject.GetPortNumber() << "\n";
+
 	//TCP client
 	 int status;
     struct addrinfo host_info;       // The struct that getaddrinfo() fills up with data.
@@ -52,7 +64,7 @@ HttpResponse HttpClient::RunRequest(std::string url, std::string type) {
 
     // Now fill up the linked list of host_info structs with google's address information.
     //status = getaddrinfo("www.google.com", "80", &host_info, &host_info_list);
-    status = getaddrinfo(url.c_str(), "80", &host_info, &host_info_list);
+    status = getaddrinfo(urlObject.GetHostName().c_str(), urlObject.GetPortNumber().c_str(), &host_info, &host_info_list);
     // getaddrinfo returns 0 on succes, or some other value when an error occured.
     // (translated into human readable text by the gai_gai_strerror function).
     if (status != 0)  std::cout << "getaddrinfo error" << gai_strerror(status) ;
@@ -73,8 +85,8 @@ HttpResponse HttpClient::RunRequest(std::string url, std::string type) {
     std::cout << "send()ing message..."  << std::endl;
     //char *msg = "GET / HTTP/1.1\nhost: www.google.com\n\n";
     //std::string msg = "GET / HTTP/1.1\nhost: www.google.com\n\n";
-    
-    std::string msg = type + " / HTTP/1.1\nhost: " + url + "\n\n";
+
+    std::string msg = type + " / HTTP/1.1\nhost: " + urlObject.GetFullURL() + "\n\n";
     int len;
     ssize_t bytes_sent;
     len = strlen(msg.c_str());
@@ -92,13 +104,13 @@ HttpResponse HttpClient::RunRequest(std::string url, std::string type) {
     //std::cout << incomming_data_buffer << std::endl;
     std::cout << "Receiving complete. Closing socket..." << std::endl;
     freeaddrinfo(host_info_list);
-    
+
     std::string raw(incomming_data_buffer);
-    
+
     HttpResponse response(raw);
-    
+
     close(socketfd);
-    
+
     return response;
-	
+
 }

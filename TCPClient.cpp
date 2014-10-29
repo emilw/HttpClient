@@ -7,6 +7,18 @@
 
 
 std::string TCPClient::Send(std::string hostname, std::string portNumber, std::string message) {
+
+  //To be used to make it platform independent
+  #ifdef __linux__
+  std::cout << "In Linux\n"
+  #elif _WIN32
+  std::cout << "In Windows\n";
+  #elif __APPLE__
+  std::cout << "Mac Os X\n";
+  #else
+  std::cout << "Unknown system \n";
+  #endif
+
   //TCP client
    int status;
     struct addrinfo host_info;       // The struct that getaddrinfo() fills up with data.

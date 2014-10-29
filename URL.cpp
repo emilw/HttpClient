@@ -1,7 +1,6 @@
 
 #include "URL.h"
 #include <cstdlib>
-#include <iostream>
 
 URL::URL(std::string url) {
 
@@ -24,7 +23,6 @@ URL::URL(std::string url) {
 
   //If the port position do not exists, set default to 80
   if(portEndPos == std::string::npos) {
-    std::cout << "port do not exists";
     _portNumber = "80";
 
     if(hostNameEndPos == std::string::npos) {
@@ -34,17 +32,13 @@ URL::URL(std::string url) {
     }
 
   } else {
-    std::cout << "port exists\n";
-    std::cout << url << "\n";
     //Get the first slash if it exists
     int endPos = hostNameEndPos;
     //If there is nothing more than the hostname e.g. www.google.com, get the last position
     if(hostNameEndPos == std::string::npos) {
-      std::cout << "host slash do not exists\n";
       endPos = url.size();
     }
 
-    std::cout << hostNameEndPos << "\n";
     _portNumber = url.substr(portEndPos+1, url.size()-(endPos+1));
     //_host = //url.substr(portEndPos+1, url.size()-endPos);
     _host = url.substr(0, portEndPos);

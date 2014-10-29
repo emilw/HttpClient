@@ -1,7 +1,7 @@
 all: client
 
-client: main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o
-	g++ main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o -o client
+client: main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o TCPClient.o
+	g++ main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o TCPClient.o -o client
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -17,6 +17,9 @@ StringBufferHelper.o: StringBufferHelper.cpp StringBufferHelper.h
 
 URL.o: URL.cpp URL.h
 	g++ -c URL.cpp URL.h
+
+TCPClient.o: TCPClient.cpp TCPClient.h
+	g++ -c TCPClient.cpp TCPClient.h
 
 #hello.o: hello.cpp
 #    g++ -c hello.cpp

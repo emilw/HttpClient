@@ -2,11 +2,22 @@
 
 #include "HttpResponse.h"
 
-HttpResponse::HttpResponse(std::string responseData) {
-	_pRawBuffer = new StringBufferHelper(responseData);
-	//_responseData = responseData;
-	parseHttpResponseData();
-		
+HttpResponse::HttpResponse(std::string responseData, URL originalURL) {
+
+	_requestURL = &originalURL;
+
+	if(responseData.substr(0,5) == "ERROR") {
+		_httpStatusCode = "999";
+		_httpStatusText = responseData.substr(5, responseData.size()-5);
+	} else {
+		_pRawBuffer = new StringBufferHelper(responseData);
+		//_responseData = responseData;
+		parseHttpResponseData();
+	}
+}
+
+URL HttpResponse::GetRequestURL() {
+	return *_requestURL;
 }
 
 std::string HttpResponse::moveBufferForward(std::string buffer, int newPosition) {
@@ -14,7 +25,7 @@ std::string HttpResponse::moveBufferForward(std::string buffer, int newPosition)
 }
 
 void HttpResponse::parseHttpResponseData() {
-	
+
 	//Get HTTP envelope
 	//std::string httpEnvelope = responseData.substr(0, responseData.find("\n"));
 	parseHttpEnvelope();
@@ -23,9 +34,9 @@ void HttpResponse::parseHttpResponseData() {
 
 void HttpResponse::parseHttpEnvelope() {
 	//_httpStatusText = httpEnvelopeData;
-	
+
 	//std::string buffer = httpEnvelopeData;
-	
+
 	_httpVersion = _pRawBuffer->GetNextSegmentBySeparator(" ");
 	_httpStatusCode = _pRawBuffer->GetNextSegmentBySeparator(" ");
 	_httpStatusText = _pRawBuffer->GetNextSegmentBySeparator("\n");
@@ -34,9 +45,9 @@ void HttpResponse::parseHttpEnvelope() {
 void HttpResponse::parseHttpHeaders() {
 	//_headerMap.ins
 	//mymap.insert ( std::pair<char,int>('a',100) );
-	
+
 	std::string key, value;
-	
+
 	while(true) {
 		key = _pRawBuffer->GetNextSegmentBySeparator(": ");
 		if(key == "NA")
@@ -63,5 +74,9 @@ std::map<std::string, std::string> HttpResponse::GetHttpHeaders() {
 }
 
 std::string HttpResponse::GetRawResponse() {
-	return _pRawBuffer->GetRawData();
+
+	if(_pRawBuffer != nullptr)
+		return _pRawBuffer->GetRawData();
+
+	return "";
 }

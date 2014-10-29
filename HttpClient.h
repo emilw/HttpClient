@@ -7,13 +7,9 @@
 class HttpClient
 {
 	public:
-		HttpClient(std::string message);
-		std::string GetMessage();
+		HttpClient();
 		HttpResponse RunRequest(std::string url, std::string type);
-		std::string GetHostName(std::string url);
-		int GetPort(std::string url);
 	private:
-		std::string _message;
 };
 
 #endif /* HTTPCLIENT_H */

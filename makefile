@@ -1,28 +1,54 @@
+#Define variables
+CXX	:= g++
+CXXFLAGS := -g
+
+OBJECTFOLDER := objects
+#SOURCEFOLDER := source
+
+#OBJECTS := main.cpp.o HttpClient.cpp.o HttpResponse.cpp.o StringBufferHelper.cpp.o URL.cpp.o TCPClient.cpp.o
+NEWSOURCE := main.cpp HttpClient.cpp HttpResponse.cpp StringBufferHelper.cpp URL.cpp TCPClient.cpp
+OBJECTS := $(NEWSOURCE:.cpp=.o)
+OBJECTSWITHPATH := $(addprefix objects/, $(OBJECTS))
+DUDE := $(addprefix buddy/, nisse pisse)
+
+#OBJBUILDPATH = $(OBJECT: path/, )
+
 all: client
 
-client: main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o TCPClient.o
-	g++ main.o HttpClient.o HttpResponse.o StringBufferHelper.o URL.o TCPClient.o -o client
+#client: $(OBJECTS)
+#	$(CXX) objects/$(OBJECTS) -o client
 
-main.o: main.cpp
-	g++ -c main.cpp
+#VPATH = src:objects
 
-HttpClient.o: HttpClient.cpp HttpClient.h
-	g++ -c HttpClient.cpp HttpClient.h
+client: $(OBJECTS)
+	$(CXX) $(OBJECTSWITHPATH) -o bin/client
 
-HttpResponse.o: HttpResponse.cpp HttpResponse.h
-	g++ -c HttpResponse.cpp HttpResponse.h
+#client: %.o
+#	$(CXX) $< -o client
 
-StringBufferHelper.o: StringBufferHelper.cpp StringBufferHelper.h
-	g++ -c StringBufferHelper.cpp StringBufferHelper.h
+%.o: source/%.cpp
+	$(CXX) -c $< -o objects/$@
 
-URL.o: URL.cpp URL.h
-	g++ -c URL.cpp URL.h
+#main.cpp.o: main.cpp
+#	$(CXX) -c main.cpp
 
-TCPClient.o: TCPClient.cpp TCPClient.h
-	g++ -c TCPClient.cpp TCPClient.h
+#HttpClient.o: HttpClient.cpp HttpClient.h
+#	$(CXX) -c HttpClient.cpp HttpClient.h
+
+#HttpResponse.o: HttpResponse.cpp HttpResponse.h
+#	$(CXX) -c HttpResponse.cpp HttpResponse.h
+
+#StringBufferHelper.o: StringBufferHelper.cpp StringBufferHelper.h
+#	$(CXX) -c StringBufferHelper.cpp StringBufferHelper.h
+
+#TCPClient.o: TCPClient.cpp TCPClient.h
+#	$(CXX) -c $<
+
+
 
 #hello.o: hello.cpp
 #    g++ -c hello.cpp
 
 clean:
-	rm -rf *o client
+	rm -rf objects/*.o
+	rm -rf bin/client

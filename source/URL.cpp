@@ -23,7 +23,11 @@ URL::URL(std::string url) {
 
   //If the port position do not exists, set default to 80
   if(portEndPos == std::string::npos) {
-    _portNumber = "80";
+    if(this->GetProtocoll() == "https") {
+      _portNumber = "443";
+    } else {
+      _portNumber = "80";
+    }
 
     if(hostNameEndPos == std::string::npos) {
       _host = url;

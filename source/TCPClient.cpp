@@ -82,3 +82,7 @@ std::string TCPClient::Send(std::string hostname, std::string portNumber, std::s
     std::string raw(incomming_data_buffer);
     return raw;
 }
+
+std::string TCPClient::SendOverSSL(std::string hostname, std::string portNumber, std::string message) {
+  return std::string("ERROR: HTTPS is not supported yet!");
+}

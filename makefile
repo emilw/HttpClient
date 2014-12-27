@@ -9,7 +9,6 @@ OBJECTFOLDER := objects
 NEWSOURCE := main.cpp HttpClient.cpp HttpResponse.cpp StringBufferHelper.cpp URL.cpp TCPClient.cpp
 OBJECTS := $(NEWSOURCE:.cpp=.o)
 OBJECTSWITHPATH := $(addprefix objects/, $(OBJECTS))
-DUDE := $(addprefix buddy/, nisse pisse)
 
 #OBJBUILDPATH = $(OBJECT: path/, )
 

@@ -5,17 +5,18 @@
 #include <map>
 #include "StringBufferHelper.h"
 #include "URL.h"
+#include "Log.h"
 
 class HttpResponse {
 
 public:
-	HttpResponse(std::string responseData, URL originalURL);
+	HttpResponse(std::string responseData, URL* originalURL, Log log);
 	std::string GetHttpStatusCode();
 	std::string GetHttpStatusText();
 	std::string GetRawResponse();
 	std::string GetHttpVersion();
 	std::map<std::string, std::string> GetHttpHeaders();
-	URL GetRequestURL();
+	URL* GetRequestURL();
 private:
 	std::string moveBufferForward(std::string buffer, int newPosition);
 	void parseHttpResponseData();
@@ -27,6 +28,7 @@ private:
 	std::string _httpVersion;
 	std::map<std::string, std::string> _headerMap;
 	URL* _requestURL;
+	Log _log;
 };
 
 #endif /* HTTPRESPONSE_H */

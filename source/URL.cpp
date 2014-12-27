@@ -64,3 +64,9 @@ std::string URL::GetPortNumber() {
 std::string URL::GetFullURL() {
   return _url;
 }
+
+bool URL::IsSSL() {
+	if(this->GetProtocoll() == "https")
+		return true;
+	else return false;
+}

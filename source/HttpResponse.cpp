@@ -2,22 +2,26 @@
 
 #include "HttpResponse.h"
 
-HttpResponse::HttpResponse(std::string responseData, URL originalURL) {
+HttpResponse::HttpResponse(std::string responseData, URL* originalURL, Log log) {
 
-	_requestURL = &originalURL;
+	_log = log;
+	_requestURL = originalURL;
+	_log.Add("HttpResponse", "Starting parsing");
 
 	if(responseData.substr(0,5) == "ERROR") {
 		_httpStatusCode = "999";
 		_httpStatusText = responseData.substr(5, responseData.size()-5);
+		_log.Add("Client handled error occured");
 	} else {
 		_pRawBuffer = new StringBufferHelper(responseData);
 		//_responseData = responseData;
 		parseHttpResponseData();
+		_log.Add("HttpResponse", "Parsing of response went ok");
 	}
 }
 
-URL HttpResponse::GetRequestURL() {
-	return *_requestURL;
+URL* HttpResponse::GetRequestURL() {
+	return _requestURL;
 }
 
 std::string HttpResponse::moveBufferForward(std::string buffer, int newPosition) {

@@ -10,6 +10,7 @@ public:
   std::string GetProtocoll();
   std::string GetPortNumber();
   std::string GetFullURL();
+  bool IsSSL();
 private:
   std::string _url;
   std::string _host;

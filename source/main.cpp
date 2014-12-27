@@ -34,11 +34,12 @@
 
 //using std;
 
+void printOut(std::string message){
+		std::cout << "CPrint: " << message << "\n";
+}
+
 int main(int argc, char **argv)
 {
-	//std::cout << client1.GetMessage() << "\n";
-	//std::cout << "Starting...\n";
-
 	std::string adress;
 	if(argc > 1)
 	{
@@ -52,17 +53,26 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	HttpClient client;
+	Log log(printOut);
+	HttpClient client(log);
 
+	try
+	{
 	HttpResponse response = client.RunRequest(adress, "GET");
-
-	URL urlObject = response.GetRequestURL();
-
-	std::cout << "Request information-------------------" << "\n";
-	std::cout << "Full URL: " << urlObject.GetFullURL() << "\n";
-	std::cout << "Protocoll: " << urlObject.GetProtocoll() << "\n";
-	std::cout << "Host name: " << urlObject.GetHostName() << "\n";
-	std::cout << "Port number: " << urlObject.GetPortNumber() << "\n";
+	printOut("Client was called, ok!");
+	
+	URL* urlObject = response.GetRequestURL();
+	
+	if(urlObject == nullptr) {
+		std::cout << "The URL is dead";
+	}
+	
+	printOut("Request information-------------------");
+	printOut("Full URL" + urlObject->GetFullURL());
+	/*std::cout << "Full URL: " << urlObject->GetFullURL() << "\n";
+	std::cout << "Protocoll: " << urlObject->GetProtocoll() << "\n";
+	std::cout << "Host name: " << urlObject->GetHostName() << "\n";
+	std::cout << "Port number: " << urlObject->GetPortNumber() << "\n";*/
 
 	std::cout << "Basic information---------------------" << "\n";
 
@@ -78,6 +88,10 @@ int main(int argc, char **argv)
 
 	std::cout << "Raw response-------------------------\n";
 	std::cout << response.GetRawResponse() << "\n";
+	} catch(int e) {
+		
+		std::cout << "Output 1\n";
+	}
 
 	return 0;
 }

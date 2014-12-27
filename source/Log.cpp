@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 Log::Log() {
-	_printFunction == nullptr;
+	_printFunction = nullptr;
 }
 
 Log::Log(void (*printFunction)(std::string textToPrint)){

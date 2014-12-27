@@ -1,6 +1,6 @@
 #Define variables
 CXX	:= g++
-CXXFLAGS := -g
+CXXFLAGS := -c -std=c++11
 
 OBJECTFOLDER := objects
 #SOURCEFOLDER := source
@@ -26,7 +26,7 @@ client: $(OBJECTS)
 #	$(CXX) $< -o client
 
 %.o: source/%.cpp
-	$(CXX) -c $< -o objects/$@
+	$(CXX) $(CXXFLAGS) $< -o objects/$@
 
 #main.cpp.o: main.cpp
 #	$(CXX) -c main.cpp

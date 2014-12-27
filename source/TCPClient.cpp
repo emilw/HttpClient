@@ -10,7 +10,7 @@ std::string TCPClient::Send(std::string hostname, std::string portNumber, std::s
 
   //To be used to make it platform independent
   #ifdef __linux__
-  std::cout << "In Linux\n"
+  std::cout << "In Linux\n";
   #elif _WIN32
   std::cout << "In Windows\n";
   #elif __APPLE__

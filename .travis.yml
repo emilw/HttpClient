@@ -3,4 +3,6 @@ compiler:
   - gcc
   - clang
 # Change this to your needs
-script: cd build && .\build\BuildScriptUnix.sh
+before_script:
+  - cd build
+script: .\BuildScriptUnix.sh

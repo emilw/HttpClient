@@ -1,0 +1,1 @@
+ C:\Chocolatey\bin\cmake.bat "Visual Studio 11 2012" ..

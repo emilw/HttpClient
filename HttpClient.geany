@@ -5,7 +5,7 @@ strip_trailing_spaces=false
 replace_tabs=false
 
 [indentation]
-indent_width=4
+indent_width=2
 indent_type=0
 indent_hard_tab_width=8
 detect_indent=false
@@ -24,9 +24,21 @@ long_line_column=72
 
 [files]
 current_page=0
-FILE_NAME_0=151;C++;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpClient.cpp;0;4
-FILE_NAME_1=160;Sh;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fbuild%2FBuildScriptUnix.sh;0;4
-FILE_NAME_2=0;C;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FURL.h;0;4
+FILE_NAME_0=42;C++;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpClient.cpp;0;4
+FILE_NAME_1=154;Sh;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fbuild%2FBuildScriptUnix.sh;0;4
+FILE_NAME_2=25;C;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FURL.h;0;4
+FILE_NAME_3=550;CMake;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2FCMakeLists.txt;0;4
+FILE_NAME_4=1517;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FURL.cpp;0;4
+FILE_NAME_5=159;C;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpClient.h;0;4
+FILE_NAME_6=52;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpResponse.cpp;0;4
+FILE_NAME_7=89;C;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpResponse.h;0;4
+FILE_NAME_8=24;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FLog.cpp;0;4
+FILE_NAME_9=24;C;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FLog.h;0;4
+FILE_NAME_10=437;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2Fmain.cpp;0;4
+FILE_NAME_11=24;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FStringBufferHelper.cpp;0;4
+FILE_NAME_12=329;C;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FStringBufferHelper.h;0;4
+FILE_NAME_13=6112;C++;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FTCPClient.cpp;0;4
+FILE_NAME_14=23;C;0;EUTF-8;0;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FTCPClient.h;0;4
 
 [VTE]
 last_dir=/home/emil/Source/ConsoleApp1
@@ -37,11 +49,14 @@ CMakeFT_00_CM=./BuildScriptUnix.sh
 CMakeFT_00_WD=/home/emil/Source/HttpClient/build
 filetypes=CMake;C++;
 NF_00_LB=_Make
-NF_00_CM=make
-NF_00_WD=
+NF_00_CM=%d/../build/BuildScriptUnix.sh
+NF_00_WD=%d/../build
 NF_03_LB=
 NF_03_CM=
 NF_03_WD=
 C++FT_01_LB=Bygg
-C++FT_01_CM=%d/../build/BuildScriptUnix.sh
-C++FT_01_WD=%d/../build
+C++FT_01_CM=
+C++FT_01_WD=
+EX_00_LB=_Exekvera
+EX_00_CM=
+EX_00_WD=

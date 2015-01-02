@@ -1,3 +1,5 @@
+// Copyright 2014 EmilW
+
 #ifndef STRINGBUFFERHELPER_H
 #define STRINGBUFFERHELPER_H
 

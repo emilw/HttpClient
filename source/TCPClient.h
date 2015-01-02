@@ -1,3 +1,5 @@
+// Copyright 2014 EmilW
+
 #include <string>
 
 class TCPClient {

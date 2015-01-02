@@ -1,13 +1,14 @@
+// Copyright 2014 EmilW
 
-#include "Log.h"
 #include <cstdlib>
-
+#include <string>
+#include "Log.h"
 Log::Log() {
-	_printFunction = nullptr;
+  _printFunction = nullptr;
 }
 
-Log::Log(void (*printFunction)(std::string textToPrint)){
-	_printFunction = printFunction;
+Log::Log(void (*printFunction)(std::string textToPrint)) {
+  _printFunction = printFunction;
 }
 
 std::string Log::GetFullLogAsText() {
@@ -15,13 +16,12 @@ std::string Log::GetFullLogAsText() {
 }
 
 void Log::Add(std::string message) {
-	_logText + "\n" + message;
-	
-	if(_printFunction != nullptr){
-		_printFunction(message);
-	}
+  _logText + "\n" + message;
+  if (_printFunction != nullptr) {
+    _printFunction(message);
+  }
 }
 
 void Log::Add(std::string prefix, std::string message) {
-	Add("[" + prefix + "] " + message);
+  Add("[" + prefix + "] " + message);
 }

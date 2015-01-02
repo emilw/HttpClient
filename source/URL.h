@@ -1,3 +1,5 @@
+// Copyright 2014 EmilW
+
 #ifndef URL_H
 #define URL_H
 

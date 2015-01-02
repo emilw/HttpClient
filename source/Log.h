@@ -1,19 +1,20 @@
-#ifndef LOG_H
-#define LOG_H
+// Copyright 2014 EmilW
 
+#ifndef SOURCE_LOG_H_
+#define SOURCE_LOG_H_
 #include <string>
 
 class Log {
-public:
+ public:
   Log();
-  Log(void (*printFunction)(std::string textToPrint));
+  explicit Log(void (*printFunction)(std::string textToPrint));
   void Add(std::string message);
   void Add(std::string prefix, std::string message);
   std::string GetFullLogAsText();
-private:
+ private:
   std::string _logText;
   void (*_printFunction)(std::string textToPrint);
 };
 
 
-#endif /* LOG_H */
+#endif  // SOURCE_LOG_H_

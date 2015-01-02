@@ -1,3 +1,5 @@
+// Copyright 2014 EmilW
+
 #include <iostream>
 #include <cstring>      // Needed for memset
 #ifdef _WIN32

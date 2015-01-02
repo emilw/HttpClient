@@ -4,10 +4,13 @@ set(source_dir source/)
 set(bin_dir ../bin/)
 set(source_files ${source_dir}main.cpp source/HttpClient.cpp ${source_dir}HttpResponse.cpp ${source_dir}TCPClient.cpp ${source_dir}StringBufferHelper.cpp ${source_dir}URL.cpp ${source_dir}Log.cpp)
 add_executable(${bin_dir}HttpClient ${source_files})
-#${source_dir}main.cpp source/HttpClient.cpp ${source_dir}HttpResponse.cpp ${source_dir}TCPClient.cpp ${source_dir}StringBufferHelper.cpp ${source_dir}URL.cpp ${source_dir}Log.cpp)
 add_definitions(-std=c++11)
+
+if(WIN32)
+    target_link_libraries(HttpClient ws2_32)
+else()
+endif()
 
 enable_testing(true)
 add_subdirectory(${source_dir}tests)
 include_directories(${source_dir}tests)
-

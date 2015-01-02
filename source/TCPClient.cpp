@@ -1,18 +1,102 @@
 #include <iostream>
 #include <cstring>      // Needed for memset
-#ifdef __linux__
+#ifdef _WIN32
+#include <winsock2.h>
+#include <WS2TCPIP.H>
+#else
 #include <sys/socket.h> // Needed for the socket functions
 #include <netdb.h>      // Needed for the socket functions
 #include <unistd.h>
-#elif _WIN32
-#include <winsock2.h>
-#include <WS2TCPIP.H>
 #endif
 #include "TCPClient.h"
 
 const int BUFFERSIZE = 1000;
 
-#ifdef __linux__
+#ifdef _WIN32
+std::string TCPClient::SendWin(std::string hostname, std::string portNumber, std::string message) {
+
+  struct addrinfo host_info;
+  struct addrinfo *host_info_list = nullptr;
+  struct addrinfo *host_info_first = nullptr;
+  int status = 0;
+  WSADATA wsaData;
+
+  //Windows specific
+  WSAStartup(MAKEWORD(2,2), &wsaData);
+  if (status != 0) {
+    printf("WSAStartup failed: %d\n", status);
+    return std::string("ERROR: Could not initialize winsock");
+  }
+
+  //Init address structure
+  ZeroMemory(&host_info, sizeof(host_info));
+  host_info.ai_family = AF_UNSPEC;
+  host_info.ai_socktype = SOCK_STREAM;
+  host_info.ai_protocol = IPPROTO_TCP;
+  status = getaddrinfo(hostname.c_str(), portNumber.c_str(), &host_info, &host_info_list);
+
+  if (status != 0) {
+    WSACleanup();
+    return std::string("ERROR: Hostname could not be resolved");
+    }
+
+  SOCKET socketfd = INVALID_SOCKET;
+  host_info_first = host_info_list;
+
+  socketfd = socket(host_info_first->ai_family, host_info_first->ai_socktype, host_info_first->ai_protocol);
+  if (socketfd == INVALID_SOCKET) {
+    printf("Error at socket(): %ld\n", WSAGetLastError());
+    freeaddrinfo(host_info_list);
+    WSACleanup();
+    return std::string("ERROR: Could not open socket");
+  }
+
+  status = connect(socketfd, host_info_first->ai_addr, (int)host_info_first->ai_addrlen);
+  if(status == SOCKET_ERROR) {
+    closesocket(socketfd);
+    socketfd = INVALID_SOCKET;
+    freeaddrinfo(host_info_list);
+    WSACleanup();
+    return std::string("ERROR: Could not connect");
+  }
+
+  std::string msg = message;
+    int len;
+    int bytes_sent;
+    len = strlen(msg.c_str());
+    bytes_sent = send(socketfd, msg.c_str(), len, 0);
+
+  if(bytes_sent == SOCKET_ERROR) {
+    closesocket(socketfd);
+    WSACleanup();
+    return std::string("Failed to send message on socket");
+  }
+
+  //Close send socket
+  status = shutdown(socketfd, SD_SEND);
+  if (status == SOCKET_ERROR) {
+    printf("shutdown failed: %d\n", WSAGetLastError());
+    closesocket(socketfd);
+    WSACleanup();
+    return std::string("Failed to close sending socket");
+  }
+
+  int bytes_recieved;
+  char incomming_data_buffer[BUFFERSIZE];
+
+  do {
+    status = recv(socketfd, incomming_data_buffer, BUFFERSIZE, 0);
+    if (status > 0)
+        printf("Bytes received: %d\n", status);
+    else if (status == 0)
+        printf("Connection closed\n");
+    else
+        printf("recv failed: %d\n", WSAGetLastError());
+  } while (status > 0);
+
+    return std::string(incomming_data_buffer);
+}
+#else
 std::string TCPClient::Sendnix(std::string hostname, std::string portNumber, std::string message) {
   //TCP client
    int status;
@@ -74,92 +158,6 @@ std::string TCPClient::Sendnix(std::string hostname, std::string portNumber, std
 
     close(socketfd);
 
-    return std::string raw(incomming_data_buffer);
-}
-#endif
-
-#ifdef _WIN32
-std::string TCPClient::SendWin(std::string hostname, std::string portNumber, std::string message) {
-	
-	struct addrinfo host_info;
-	struct addrinfo *host_info_list = nullptr;
-	struct addrinfo *host_info_first = nullptr;
-	int status = 0;
-	WSADATA wsaData;
-
-	//Windows specific
-	WSAStartup(MAKEWORD(2,2), &wsaData);
-	if (status != 0) {
-		printf("WSAStartup failed: %d\n", status);
-		return std::string("ERROR: Could not initialize winsock");
-	}
-
-	//Init address structure
-	ZeroMemory(&host_info, sizeof(host_info));
-	host_info.ai_family = AF_UNSPEC;
-	host_info.ai_socktype = SOCK_STREAM;
-	host_info.ai_protocol = IPPROTO_TCP;
-	status = getaddrinfo(hostname.c_str(), portNumber.c_str(), &host_info, &host_info_list);
-
-	if (status != 0) {
-		WSACleanup();
-		return std::string("ERROR: Hostname could not be resolved");
-    }
-
-	SOCKET socketfd = INVALID_SOCKET;
-	host_info_first = host_info_list;
-
-	socketfd = socket(host_info_first->ai_family, host_info_first->ai_socktype, host_info_first->ai_protocol);
-	if (socketfd == INVALID_SOCKET) {
-		printf("Error at socket(): %ld\n", WSAGetLastError());
-		freeaddrinfo(host_info_list);
-		WSACleanup();
-		return std::string("ERROR: Could not open socket");
-	}
-
-	status = connect(socketfd, host_info_first->ai_addr, (int)host_info_first->ai_addrlen);
-	if(status == SOCKET_ERROR) {
-		closesocket(socketfd);
-		socketfd = INVALID_SOCKET;
-		freeaddrinfo(host_info_list);
-		WSACleanup();
-		return std::string("ERROR: Could not connect");
-	}
-
-	std::string msg = message;
-    int len;
-    int bytes_sent;
-    len = strlen(msg.c_str());
-    bytes_sent = send(socketfd, msg.c_str(), len, 0);
-
-	if(bytes_sent == SOCKET_ERROR) {
-		closesocket(socketfd);
-		WSACleanup();
-		return std::string("Failed to send message on socket");
-	}
-
-	//Close send socket
-	status = shutdown(socketfd, SD_SEND);
-	if (status == SOCKET_ERROR) {
-		printf("shutdown failed: %d\n", WSAGetLastError());
-		closesocket(socketfd);
-		WSACleanup();
-		return std::string("Failed to close sending socket");
-	}
-
-	int bytes_recieved;
-	char incomming_data_buffer[BUFFERSIZE];
-
-	do {
-		status = recv(socketfd, incomming_data_buffer, BUFFERSIZE, 0);
-    if (status > 0)
-        printf("Bytes received: %d\n", status);
-    else if (status == 0)
-        printf("Connection closed\n");
-    else
-        printf("recv failed: %d\n", WSAGetLastError());
-	} while (status > 0);
-
     return std::string(incomming_data_buffer);
 }
 #endif
@@ -176,7 +174,7 @@ std::string TCPClient::Send(std::string hostname, std::string portNumber, std::s
   #else
   std::cout << "Unknown system \n";
   #endif
-  
+
 
 	#ifdef __linux__
 		return this->Sendnix(hostname, portNumber, message);
@@ -186,7 +184,6 @@ std::string TCPClient::Send(std::string hostname, std::string portNumber, std::s
 		return this->SendWin(hostname, portNumber, message);
 	#endif
 
-//    return raw;
 }
 
 std::string TCPClient::SendOverSSL(std::string hostname, std::string portNumber, std::string message) {

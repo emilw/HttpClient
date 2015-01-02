@@ -7,8 +7,8 @@
 HttpClient::HttpClient() {
 }
 
-HttpClient::HttpClient(Log log){
-	_log = log;
+HttpClient::HttpClient(Log log) {
+   _log = log;
 }
 
 //This needs to be refactored to go away from command line style

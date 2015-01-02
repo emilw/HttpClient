@@ -6,7 +6,7 @@ replace_tabs=false
 
 [indentation]
 indent_width=4
-indent_type=1
+indent_type=0
 indent_hard_tab_width=8
 detect_indent=false
 detect_indent_width=false
@@ -15,13 +15,33 @@ indent_mode=2
 [project]
 name=HttpClient
 base_path=/home/emil/Source/HttpClient
+description=
+file_patterns=*.cpp;*.h;
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=-1
+current_page=0
+FILE_NAME_0=151;C++;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FHttpClient.cpp;0;4
+FILE_NAME_1=160;Sh;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fbuild%2FBuildScriptUnix.sh;0;4
+FILE_NAME_2=0;C;0;EUTF-8;1;1;0;%2Fhome%2Femil%2FSource%2FHttpClient%2Fsource%2FURL.h;0;4
 
 [VTE]
 last_dir=/home/emil/Source/ConsoleApp1
+
+[build-menu]
+CMakeFT_00_LB=ByggProjekt
+CMakeFT_00_CM=./BuildScriptUnix.sh
+CMakeFT_00_WD=/home/emil/Source/HttpClient/build
+filetypes=CMake;C++;
+NF_00_LB=_Make
+NF_00_CM=make
+NF_00_WD=
+NF_03_LB=
+NF_03_CM=
+NF_03_WD=
+C++FT_01_LB=Bygg
+C++FT_01_CM=%d/../build/BuildScriptUnix.sh
+C++FT_01_WD=%d/../build

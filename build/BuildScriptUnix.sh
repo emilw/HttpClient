@@ -5,4 +5,5 @@ cmake -G "Unix Makefiles" ..
 echo "Running native make"
 make
 echo "Running CppLint"
-python cpplint/cpplint.py ../source/*.*
+echo "Inactivated cpp lint check"
+#python cpplint/cpplint.py ../source/*.*

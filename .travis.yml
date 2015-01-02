@@ -5,4 +5,4 @@ compiler:
 # Change this to your needs
 before_script:
   - cd build
-script: .\BuildScriptUnix.sh
+script: ./BuildScriptUnix.sh

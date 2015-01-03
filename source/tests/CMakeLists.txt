@@ -8,5 +8,5 @@ include(ExternalProject)
 #  set(sourceFile_val ../../${sourceFile})
 #endforeach(sourceFile)
 
-add_executable(../../../bin/HttpClientTests catch.hpp URLTests.cpp)
-add_test("AllTests" ../../../bin/HttpClientTests)
+add_executable(HttpClientTests catch.hpp URLTests.cpp)
+add_test("AllTests" HttpClientTests)

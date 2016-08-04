@@ -1,13 +1,23 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
+#include "../URL.h"
 
-unsigned int Factorial( unsigned int number ) {
-    return number <= 1 ? number : Factorial(number-1)*number;
-}
+TEST_CASE( "Create regular URL", "URLTests" ) {
+    
+    URL* urlObject;
 
-TEST_CASE( "Factorials are computed", "URLTests" ) {
-    REQUIRE( Factorial(1) == 12 );
-    REQUIRE( Factorial(2) == 2 );
-    REQUIRE( Factorial(3) == 6 );
-    REQUIRE( Factorial(10) == 3628800 );
+    SECTION( "with http" ) {
+        urlObject = new URL("http://testing.com");
+        REQUIRE_FALSE(urlObject->IsSSL());
+        CHECK(urlObject->GetPortNumber() == "80");
+        CHECK(urlObject->GetProtocoll() == "http");
+    }
+    SECTION( "with https" ) {
+        urlObject = new URL("https://testing.com");
+        REQUIRE(urlObject->IsSSL());
+        CHECK(urlObject->GetPortNumber() == "443");
+        CHECK(urlObject->GetProtocoll() == "https");
+    }
+    
+    CHECK(urlObject->GetHostName() == "testing.com");
 }

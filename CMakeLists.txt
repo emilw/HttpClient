@@ -13,4 +13,4 @@ endif()
 
 enable_testing(true)
 add_subdirectory(${source_dir}tests)
-include_directories(${source_dir}tests)
+include_directories(tests)

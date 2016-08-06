@@ -10,7 +10,7 @@ URL::URL(std::string url) {
   int protocollPos = url.find("://");
 
   if(protocollPos == std::string::npos) {
-    _protocoll = "http";
+    _protocoll = REGULARPROTOCOL;
     protocollPos = 0;
   } else {
     _protocoll = url.substr(0, protocollPos);
@@ -20,34 +20,47 @@ URL::URL(std::string url) {
 
   //Find the hostname ended by / or by : depending on if port is specified or not
   int hostNameEndPos = url.find("/");
+  
   int portEndPos = url.find(":");
+
+  int queryStringStartPos = url.find("?");
 
   //If the port position do not exists, set default to 80
   if(portEndPos == std::string::npos) {
-    if(this->GetProtocoll() == "https") {
-      _portNumber = "443";
+    if(this->GetProtocoll() == SECUREPROTOCOL) {
+      _portNumber = SECUREPROTOCOLPORT;
     } else {
-      _portNumber = "80";
+      _portNumber = REGULAREPROTOCOLPORT;
     }
-
+  } else {
+    //If there is nothing more than the hostname e.g. www.google.com, get the last position
+    if(hostNameEndPos == std::string::npos) {
+      hostNameEndPos = url.size();
+    }
+    //If there is a port specified, e.g. www.google.com:80/subfolder
+    _portNumber = url.substr(portEndPos+1, hostNameEndPos-(portEndPos+1));
+    _host = url.substr(0, portEndPos);
+  }
+  
+  //If the host was not set by due to that the port was not specified
+  if(_host == ""){
     if(hostNameEndPos == std::string::npos) {
       _host = url;
     } else {
       _host = url.substr(0, hostNameEndPos);
     }
-
-  } else {
-    //Get the first slash if it exists
-    int endPos = hostNameEndPos;
-    //If there is nothing more than the hostname e.g. www.google.com, get the last position
-    if(hostNameEndPos == std::string::npos) {
-      endPos = url.size();
-    }
-
-    _portNumber = url.substr(portEndPos+1, url.size()-(endPos+1));
-    //_host = //url.substr(portEndPos+1, url.size()-endPos);
-    _host = url.substr(0, portEndPos);
   }
+
+  //Set the relative part of the URL
+  if(hostNameEndPos != std::string::npos){
+    _relativePath = url.substr(hostNameEndPos, url.size()-hostNameEndPos);
+  }
+
+  //Set the query string part of the URL
+  if(queryStringStartPos != std::string::npos){
+      _queryString = url.substr(queryStringStartPos, url.size()-queryStringStartPos);
+    }
+  
 }
 
 std::string URL::GetHostName() {
@@ -66,8 +79,16 @@ std::string URL::GetFullURL() {
   return _url;
 }
 
+std::string URL::GetRelativePath() {
+  return _relativePath;
+}
+
+std::string URL::GetQueryString() {
+  return _queryString;
+}
+
 bool URL::IsSSL() {
-	if(this->GetProtocoll() == "https")
+	if(this->GetProtocoll() == SECUREPROTOCOL)
 		return true;
 	else return false;
 }

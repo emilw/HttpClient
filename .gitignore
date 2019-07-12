@@ -1,3 +1,7 @@
+# Escaped folders
+bin
+objects
+
 # Compiled Object files
 *.slo
 *.lo

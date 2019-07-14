@@ -1,6 +1,7 @@
 # Escaped folders
 bin
 objects
+build
 
 # Compiled Object files
 *.slo

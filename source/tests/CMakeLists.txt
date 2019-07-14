@@ -9,4 +9,4 @@ include(ExternalProject)
 #endforeach(sourceFile)
 
 add_executable(HttpClientTests catch.hpp URLTests.cpp ../URL.h ../URL.cpp)
-add_test("AllTests" HttpClientTests)
+add_test("AllTests" ${CMAKE_BINARY_DIR}/HttpClientTests)

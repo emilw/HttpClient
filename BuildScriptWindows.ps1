@@ -1,5 +1,5 @@
 C:\Chocolatey\bin\cmake.bat "Visual Studio 11 2012" ..
-Import-Module -Name ".\WindowsAdditions\Invoke-MsBuild.psm1"
+Import-Module -Name ".\build_stuff\WindowsAdditions\Invoke-MsBuild.psm1"
 
 Write-Host("Starting build")
 $buildSucceeded = Invoke-MsBuild -Path ".\HttpClient.sln"

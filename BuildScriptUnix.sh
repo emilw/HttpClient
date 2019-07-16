@@ -13,7 +13,7 @@ echo "Running native make" && \
 make && \
 
 echo "Running make test" && \
-make test && \
+ctest && \
 
 echo "Running CppLint" && \
 echo "Inactivated cpp lint check"

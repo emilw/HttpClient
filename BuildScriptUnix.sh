@@ -17,4 +17,12 @@ ctest && \
 
 echo "Running CppLint" && \
 echo "Inactivated cpp lint check"
+
+cd ..
+
+if [ ! -d "bin" ]; then
+    mkdir bin
+fi
+
+cp build/HttpClient bin/HttpClient
 #python cpplint/cpplint.py ../source/*.*

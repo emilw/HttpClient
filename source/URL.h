@@ -1,13 +1,13 @@
 // Copyright 2014 EmilW
 
-#ifndef URL_H
-#define URL_H
+#ifndef SOURCE_URL_H_
+#define SOURCE_URL_H_
 
 #include <string>
 
 class URL {
-public:
-  URL(std::string url);
+ public:
+  explicit URL(std::string url);
   std::string GetHostName();
   std::string GetProtocoll();
   std::string GetPortNumber();
@@ -15,7 +15,7 @@ public:
   std::string GetRelativePath();
   std::string GetQueryString();
   bool IsSSL();
-private:
+ private:
   std::string _url;
   std::string _host;
   std::string _protocoll;
@@ -30,4 +30,4 @@ private:
 };
 
 
-#endif /* URL_H */
+#endif  // SOURCE_URL_H_

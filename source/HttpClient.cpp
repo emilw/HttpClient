@@ -1,9 +1,10 @@
 // Copyright 2014 EmilW
 
-#include <string>
-#include "HttpClient.h"
-#include "URL.h"
-#include "TCPClient.h"
+#include "source/HttpClient.h"
+#include "source/URL.h"
+#include "source/TCPClient.h"
+
+using std::string;
 
 HttpClient::HttpClient() {
 }
@@ -13,10 +14,10 @@ HttpClient::HttpClient(Log log) {
 }
 
 // This needs to be refactored to go away from command line style
-HttpResponse HttpClient::RunRequest(std::string url, std::string type) {
+HttpResponse HttpClient::RunRequest(string url, string type) {
   URL* urlObject = new URL(url);
   TCPClient client;
-  std::string message, result;
+  string message, result;
   message = type + " / HTTP/1.1\nhost: " + urlObject->GetFullURL() + "\n\n";
 
   if (urlObject->IsSSL()) {

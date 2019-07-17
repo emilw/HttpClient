@@ -4,16 +4,18 @@
 #define SOURCE_LOG_H_
 #include <string>
 
+using std::string;
+
 class Log {
  public:
   Log();
-  explicit Log(void (*printFunction)(std::string textToPrint));
-  void Add(std::string message);
-  void Add(std::string prefix, std::string message);
-  std::string GetFullLogAsText();
+  explicit Log(void (*printFunction)(string textToPrint));
+  void Add(string message);
+  void Add(string prefix, string message);
+  string GetFullLogAsText();
  private:
-  std::string _logText;
-  void (*_printFunction)(std::string textToPrint);
+  string _logText;
+  void (*_printFunction)(string textToPrint);
 };
 
 

@@ -15,7 +15,7 @@
                 "taskName": "Build",
                 "suppressTaskName": true,
                 "args": [
-                    "cd build && ./BuildScriptUnix.sh"
+                    "./BuildScriptUnix.sh"
                 ],
                 "isBuildCommand": true
             }

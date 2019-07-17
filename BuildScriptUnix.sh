@@ -25,4 +25,5 @@ if [ ! -d "bin" ]; then
 fi
 
 cp build/HttpClient bin/HttpClient
-#python cpplint/cpplint.py ../source/*.*
+
+python build_stuff/cpplint/cpplint.py source/*.*

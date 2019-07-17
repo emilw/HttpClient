@@ -1,21 +1,21 @@
 // Copyright 2014 EmilW
 
-#ifndef STRINGBUFFERHELPER_H
-#define STRINGBUFFERHELPER_H
+#ifndef SOURCE_STRINGBUFFERHELPER_H_
+#define SOURCE_STRINGBUFFERHELPER_H_
 
 #include <string>
+using std::string;
 
 class StringBufferHelper {
-	
-public:
-	StringBufferHelper(std::string buffer);
-	std::string MoveBufferForward(int newPosition);
-	std::string GetRawData();
-	std::string GetNextSegmentBySeparator(std::string separator);
-private:
-	std::string _buffer;
-	int _currentPosition;
+ public:
+    explicit StringBufferHelper(string buffer);
+    string MoveBufferForward(int newPosition);
+    string GetRawData();
+    string GetNextSegmentBySeparator(string separator);
+ private:
+    string _buffer;
+    int _currentPosition;
 };
 
 
-#endif /* STRINGBUFFERHELPER_H */
+#endif  // SOURCE_STRINGBUFFERHELPER_H_

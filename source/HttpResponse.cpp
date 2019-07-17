@@ -1,11 +1,12 @@
 // Copyright 2014 EmilW
-
+#include "source/HttpResponse.h"
 #include <string>
 #include <utility>
 #include <map>
-#include "HttpResponse.h"
 
-HttpResponse::HttpResponse(std::string responseData, URL* originalURL,
+using std::string;
+
+HttpResponse::HttpResponse(string responseData, URL* originalURL,
                             Log log) {
   _log = log;
   _requestURL = originalURL;
@@ -26,8 +27,7 @@ URL* HttpResponse::GetRequestURL() {
   return _requestURL;
 }
 
-std::string HttpResponse::moveBufferForward(std::string buffer,
-                                            int newPosition) {
+string HttpResponse::moveBufferForward(string buffer, int newPosition) {
   return buffer.substr(newPosition+1, buffer.size());
 }
 
@@ -43,34 +43,34 @@ void HttpResponse::parseHttpEnvelope() {
 }
 
 void HttpResponse::parseHttpHeaders() {
-  std::string key, value;
+  string key, value;
 
   while (true) {
     key = _pRawBuffer->GetNextSegmentBySeparator(": ");
     if (key == "NA")
       break;
     value = _pRawBuffer->GetNextSegmentBySeparator("\n");
-    _headerMap.insert(std::pair<std::string, std::string>(key, value));
+    _headerMap.insert(std::pair<string, string>(key, value));
   }
 }
 
-std::string HttpResponse::GetHttpVersion() {
+string HttpResponse::GetHttpVersion() {
   return _httpVersion;
 }
 
-std::string HttpResponse::GetHttpStatusCode() {
+string HttpResponse::GetHttpStatusCode() {
   return _httpStatusCode;
 }
 
-std::string HttpResponse::GetHttpStatusText() {
+string HttpResponse::GetHttpStatusText() {
   return _httpStatusText;
 }
 
-std::map<std::string, std::string> HttpResponse::GetHttpHeaders() {
+std::map<string, string> HttpResponse::GetHttpHeaders() {
   return _headerMap;
 }
 
-std::string HttpResponse::GetRawResponse() {
+string HttpResponse::GetRawResponse() {
   if (_pRawBuffer != nullptr)
     return _pRawBuffer->GetRawData();
   return "";

@@ -18,7 +18,13 @@ HttpResponse HttpClient::RunRequest(string url, string type) {
   URL* urlObject = new URL(url);
   TCPClient client;
   string message, result;
-  message = type + " / HTTP/1.1\nhost: " + urlObject->GetFullURL() + "\n\n";
+  message = type + " " + urlObject->GetRelativePath() + " HTTP/1.1\r\n" \
+            + "Host: " + urlObject->GetHostName() + "\r\n" \
+            + "\r\n";
+
+  _log.Add("Making call with hostname: " + urlObject->GetHostName());
+  _log.Add("Port number: " + urlObject->GetPortNumber());
+  _log.Add("Message: \n" + message);
 
   if (urlObject->IsSSL()) {
     _log.Add("Use https for the call");

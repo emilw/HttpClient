@@ -84,6 +84,8 @@ std::string URL::GetFullURL() {
 }
 
 std::string URL::GetRelativePath() {
+  if (_relativePath.length() == 0)
+    return "/";
   return _relativePath;
 }
 
